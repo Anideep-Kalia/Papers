@@ -1,0 +1,346 @@
+openapi: 3.0.0
+info:
+  title: My App API
+  version: 1.0.0
+  description: API documentation for My App
+servers:
+  - url: http://localhost:5000
+paths:
+  /:
+    get:
+      summary: Welcome message
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Hello My KING
+
+  /api/analysis/fetchallanalysis:
+    get:
+      summary: Fetch all analysis
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Analysis'
+        '500':
+          description: Internal server error
+
+  /api/analysis/addanal:
+    post:
+      summary: Add a new analysis
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Analysis'
+      responses:
+        '200':
+          description: Analysis added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Analysis'
+        '500':
+          description: Internal server error
+
+  /api/analysis/updateanal/{id}:
+    put:
+      summary: Update an existing analysis
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Analysis'
+      responses:
+        '200':
+          description: Analysis updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Analysis'
+        '404':
+          description: Analysis not found
+        '500':
+          description: Internal server error
+
+  /api/analysis/deleteanalysis/{id}:
+    delete:
+      summary: Delete an existing analysis
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Analysis deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+                    example: Analysis deleted
+        '404':
+          description: Analysis not found
+        '500':
+          description: Internal server error
+
+  /api/paper/fetchallpapers:
+    get:
+      summary: Fetch all papers
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Paper'
+        '500':
+          description: Internal server error
+
+  /api/paper/addpaper:
+    post:
+      summary: Add a new paper
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Paper'
+      responses:
+        '200':
+          description: Paper added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Paper'
+        '500':
+          description: Internal server error
+
+  /api/paper/updatepaper/{id}:
+    put:
+      summary: Update an existing paper
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Paper'
+      responses:
+        '200':
+          description: Paper updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Paper'
+        '404':
+          description: Paper not found
+        '500':
+          description: Internal server error
+
+  /api/paper/deletepaper/{id}:
+    delete:
+      summary: Delete an existing paper
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Paper deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+                    example: Paper deleted
+        '404':
+          description: Paper not found
+        '500':
+          description: Internal server error
+
+  /api/superadmin/fetchalladmin:
+    get:
+      summary: Fetch all admins
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Admin'
+        '500':
+          description: Internal server error
+
+  /api/superadmin/fetchallusers:
+    get:
+      summary: Fetch all users
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '500':
+          description: Internal server error
+
+  /api/superadmin/getuser:
+    post:
+      summary: Get user details
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '500':
+          description: Internal server error
+
+  /api/superadmin/registeradmin:
+    post:
+      summary: Register a new admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Admin'
+      responses:
+        '200':
+          description: Admin registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Admin'
+        '500':
+          description: Internal server error
+
+  /api/user/createuser:
+    post:
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '500':
+          description: Internal server error
+
+  /api/user/getuser:
+    post:
+      summary: Get user details
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '500':
+          description: Internal server error
+
+components:
+  schemas:
+    Analysis:
+      type: object
+      properties:
+        userid:
+          type: string
+        paperid:
+          type: string
+        rightanswer:
+          type: integer
+        toatalanswer:
+          type: integer
+        attempt:
+          type: integer
+    Paper:
+      type: object
+      properties:
+        name:
+          type: string
+        year:
+          type: integer
+        slot:
+          type: integer
+        set:
+          type: string
+        month:
+          type: string
+        questions:
+          type: array
+          items:
+            type: string
+    Admin:
+      type: object
+      properties:
+        name:
+          type: string
+        userid:
+          type: string
+    User:
+      type: object
+      properties:
+        name:
+          type: string
+        gender:
+          type: string
+        country:
+          type: string
+        state:
+          type: string
+        interest:
+          type: string
+        standard:
+          type: string
+        userid:
+          type: string
+        coordinates:
+          type: array
+          items:
+            type: number
